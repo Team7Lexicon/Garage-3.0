@@ -9,8 +9,12 @@ namespace Garage3._0.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Size { get; set; }  // number of parking slots divided by 3 i e motocycle size
+        public int ParkingSize { get; set; }
+        
+        //Foreign key
         public int VehicleId { get; set; }
-        public Vehicle vehicle { get; set; }
+
+        //Nav påroperty
+        public ICollection <Vehicle> Vehicles { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace Garage3._0.Controllers
         // GET: Vehicles
         public async Task<IActionResult> Index()
         {
-            var garage3_0Context = _context.Vehicle.Include(v => v.member);
+            var garage3_0Context = _context.Vehicle.Include(v => v.Member);
             return View(await garage3_0Context.ToListAsync());
         }
 
@@ -35,7 +35,7 @@ namespace Garage3._0.Controllers
             }
 
             var vehicle = await _context.Vehicle
-                .Include(v => v.member)
+                .Include(v => v.Member)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (vehicle == null)
             {
@@ -131,7 +131,7 @@ namespace Garage3._0.Controllers
             }
 
             var vehicle = await _context.Vehicle
-                .Include(v => v.member)
+                .Include(v => v.Member)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (vehicle == null)
             {

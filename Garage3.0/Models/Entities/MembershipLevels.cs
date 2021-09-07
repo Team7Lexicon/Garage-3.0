@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 namespace Garage3._0.Models
 {
         public enum MembershipLevels {
+        None,
         Basic,
         Silver,
         Gold
