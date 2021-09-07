@@ -18,13 +18,13 @@ namespace Garage3._0.Models
         public string FirstName { get; set; }
         [CheckFirstAndLastNames]
         public string LastName { get; set; }
-        public string Email     { get; set; }
+        public string Email { get; set; }
         public DateTime RegistrationTime { get; set; }
         public string Password { get; set; }
         public string FullName => $"{FirstName} {LastName}";
         public MembershipLevels MembershipLevel { get; set; }
 
-        //Nav Property
+        //Navigation Property
         public ICollection<Vehicle> Vehicles { get; set; }
     }
 }

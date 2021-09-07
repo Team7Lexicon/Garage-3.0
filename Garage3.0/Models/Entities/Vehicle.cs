@@ -15,13 +15,13 @@ namespace Garage3._0.Models
         public int Wheels { get; set; }        
         public DateTime ArrivalTime { get; set; }
 
-        //Foreign key
+        //Foreign Keys
         public int MemberId { get; set; }
+        public int? ParkedId { get; set; }
 
-        //Nav Property
+        //Navigation Properties
         public Member Member { get; set; }
         public VehicleType VehicleType { get; set; }
-
-        public ICollection <Parked> Parkeds { get; set; }
+        public ICollection<Parked> Parkeds { get; set; }
     }
 }

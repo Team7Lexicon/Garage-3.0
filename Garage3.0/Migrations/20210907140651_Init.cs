@@ -27,17 +27,15 @@ namespace Garage3._0.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Parked",
+                name: "ParkingSpot",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ParkingSpotId = table.Column<int>(type: "int", nullable: false),
-                    VehicleId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Parked", x => x.Id);
+                    table.PrimaryKey("PK_ParkingSpot", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -56,25 +54,6 @@ namespace Garage3._0.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ParkingSpot",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ParkedId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ParkingSpot", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ParkingSpot_Parked_ParkedId",
-                        column: x => x.ParkedId,
-                        principalTable: "Parked",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Vehicle",
                 columns: table => new
                 {
@@ -87,6 +66,7 @@ namespace Garage3._0.Migrations
                     Wheels = table.Column<int>(type: "int", nullable: false),
                     ArrivalTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     MemberId = table.Column<int>(type: "int", nullable: false),
+                    ParkedId = table.Column<int>(type: "int", nullable: true),
                     VehicleTypeId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -107,38 +87,40 @@ namespace Garage3._0.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ParkedVehicle",
+                name: "Parked",
                 columns: table => new
                 {
-                    ParkedsId = table.Column<int>(type: "int", nullable: false),
-                    VehiclesId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ParkingSpotId = table.Column<int>(type: "int", nullable: false),
+                    VehicleId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ParkedVehicle", x => new { x.ParkedsId, x.VehiclesId });
+                    table.PrimaryKey("PK_Parked", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ParkedVehicle_Parked_ParkedsId",
-                        column: x => x.ParkedsId,
-                        principalTable: "Parked",
+                        name: "FK_Parked_ParkingSpot_ParkingSpotId",
+                        column: x => x.ParkingSpotId,
+                        principalTable: "ParkingSpot",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ParkedVehicle_Vehicle_VehiclesId",
-                        column: x => x.VehiclesId,
+                        name: "FK_Parked_Vehicle_VehicleId",
+                        column: x => x.VehicleId,
                         principalTable: "Vehicle",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ParkedVehicle_VehiclesId",
-                table: "ParkedVehicle",
-                column: "VehiclesId");
+                name: "IX_Parked_ParkingSpotId",
+                table: "Parked",
+                column: "ParkingSpotId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ParkingSpot_ParkedId",
-                table: "ParkingSpot",
-                column: "ParkedId");
+                name: "IX_Parked_VehicleId",
+                table: "Parked",
+                column: "VehicleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vehicle_MemberId",
@@ -154,16 +136,13 @@ namespace Garage3._0.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ParkedVehicle");
+                name: "Parked");
 
             migrationBuilder.DropTable(
                 name: "ParkingSpot");
 
             migrationBuilder.DropTable(
                 name: "Vehicle");
-
-            migrationBuilder.DropTable(
-                name: "Parked");
 
             migrationBuilder.DropTable(
                 name: "Member");
