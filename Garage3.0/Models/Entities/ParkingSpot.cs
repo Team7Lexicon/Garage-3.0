@@ -9,7 +9,7 @@ namespace Garage3._0.Models
     {        
         public int Id { get; set; }
 
-        //Nav property        
-        public Parked Parked { get; set; }      
+        //Navigation Property        
+        public ICollection<Parked> Parkeds { get; set; }      
     }
 }

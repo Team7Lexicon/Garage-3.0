@@ -9,12 +9,12 @@ namespace Garage3._0.Models
     {
         public int Id { get; set; }        
 
-        // Foreign key
+        //Foreign Keys
         public int ParkingSpotId { get; set; }
         public int VehicleId { get; set; }
 
-        //Nav property        
-        public ICollection<ParkingSpot> ParkingSpots { get; set; }
-        public ICollection<Vehicle> Vehicles { get; set; }
+        //Navigation properties        
+        public ParkingSpot ParkingSpot { get; set; }
+        public Vehicle Vehicle { get; set; }
     }
 }
