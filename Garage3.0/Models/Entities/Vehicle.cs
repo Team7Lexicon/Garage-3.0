@@ -12,9 +12,16 @@ namespace Garage3._0.Models
         public string Color { get; set; }
         public string Brand { get; set; }
         public string Model { get; set; }
-        public int Wheels { get; set; }
+        public int Wheels { get; set; }        
+        public DateTime ArrivalTime { get; set; }
+
+        //Foreign key
         public int MemberId { get; set; }
 
-        public Member member { get; set; }
+        //Nav Property
+        public Member Member { get; set; }
+        public VehicleType VehicleType { get; set; }
+
+        public ICollection <Parked> Parkeds { get; set; }
     }
 }
