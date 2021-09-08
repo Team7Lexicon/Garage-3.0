@@ -11,10 +11,10 @@ namespace Garage3._0.Models
         public string Name { get; set; }
         public int ParkingSize { get; set; }
         
-        //Foreign key
+        //Foreign Key
         public int VehicleId { get; set; }
 
-        //Nav påroperty
-        public ICollection <Vehicle> Vehicles { get; set; }
+        //Navigation Property
+        public ICollection<Vehicle> Vehicles { get; set; }
     }
 }

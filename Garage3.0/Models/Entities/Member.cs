@@ -26,7 +26,7 @@ namespace Garage3._0.Models
         public string FullName => $"{FirstName} {LastName}";
         public MembershipLevels MembershipLevel { get; set; }
 
-        //Nav Property
+        //Navigation Property
         public ICollection<Vehicle> Vehicles { get; set; }
     }
 }
