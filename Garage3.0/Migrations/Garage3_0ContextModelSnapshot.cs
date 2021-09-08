@@ -139,11 +139,8 @@ namespace Garage3._0.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ParkingSize")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VehicleId")
-                        .HasColumnType("int");
+                    b.Property<double>("ParkingSize")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
