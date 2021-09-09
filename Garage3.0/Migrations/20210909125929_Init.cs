@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Garage3._0.Migrations
 {
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -65,7 +65,6 @@ namespace Garage3._0.Migrations
                     Wheels = table.Column<int>(type: "int", nullable: false),
                     ArrivalTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     MemberId = table.Column<int>(type: "int", nullable: false),
-                    ParkedId = table.Column<int>(type: "int", nullable: true),
                     VehicleTypeId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>

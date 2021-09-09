@@ -108,9 +108,6 @@ namespace Garage3._0.Migrations
                     b.Property<string>("Model")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ParkedId")
-                        .HasColumnType("int");
-
                     b.Property<string>("RegNo")
                         .HasColumnType("nvarchar(max)");
 
