@@ -14,11 +14,11 @@ namespace Garage3._0.Validation
 
             if (value is string input)
             {
-                var model = (MemberViewModel)validationContext.ObjectInstance;//Not created yet
+                /*var model = (MemberViewModel)validationContext.ObjectInstance;//Not created yet
                 if (model.FirstName == model.LastName)
                     return new ValidationResult(errorMessage);
                 else
-                    return ValidationResult.Success;
+                    return ValidationResult.Success;*/
             }
             return new ValidationResult(errorMessage);
         }

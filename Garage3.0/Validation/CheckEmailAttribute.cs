@@ -16,9 +16,9 @@ namespace Garage3._0.Validation
 
             if (value is string input)
             {
-                 var model = (MemberViewModel)validationContext.ObjectInstance;//Not created yet
+                 /*var model = (MemberViewModel)validationContext.ObjectInstance;//Not created yet
 
-                 if (string.IsNullOrWhiteSpace(model.Email))
+                 if (string.IsNullOrWhiteSpace(model.Email))//input??
                  {
                      return new ValidationResult(errorMessage);
                  }
@@ -27,9 +27,7 @@ namespace Garage3._0.Validation
 
                  Regex CreateValidEmailRegex()
                  {
-                     string validEmailPattern = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|"
-                         + @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)"
-                         + @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
+                     string validEmailPattern = @"^[a - z0 - 9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$";
 
                      return new Regex(validEmailPattern, RegexOptions.IgnoreCase);
                  }
@@ -37,7 +35,7 @@ namespace Garage3._0.Validation
                  if (ValidEmailRegex.IsMatch(model.Email))
                  {
                      return ValidationResult.Success;
-                 }
+                 }*/
             }
             return new ValidationResult(errorMessage);
         }

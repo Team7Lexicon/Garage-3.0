@@ -24,7 +24,7 @@ namespace Garage3._0.Models
         [CheckPassWord]
         public string Password { get; set; }
         public string FullName => $"{FirstName} {LastName}";
-        public MembershipLevels MembershipLevel { get; set; }
+        public MembershipLevels? MembershipLevel { get; set; }
 
         //Navigation Property
         public ICollection<Vehicle> Vehicles { get; set; }

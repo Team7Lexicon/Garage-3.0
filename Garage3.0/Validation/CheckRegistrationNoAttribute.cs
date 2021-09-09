@@ -21,10 +21,10 @@ namespace Garage3._0.Validation
         {
             if (value is string input)
             {
-                string strRegex = "^[0 - 9][A - Z]$";
+                string strRegex = @"^[a-zA-ZåäöÅÄÖ\d\s]{2,7}$";
 
                 Regex rx = new Regex(strRegex);
-                if(rx.IsMatch(input.RegNo) && (input.Length == maxLength))
+                if(rx.IsMatch(input) && (input.Length == maxLength))//input???
                     return true;
             }
             return false;
