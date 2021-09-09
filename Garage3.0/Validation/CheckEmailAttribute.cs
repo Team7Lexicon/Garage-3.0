@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿/*using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using Garage3._0.Models.ViewModels;
 
 namespace Garage3._0.Validation
 {
@@ -43,4 +43,4 @@ namespace Garage3._0.Validation
         }
 
     }
-}
+}*/

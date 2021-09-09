@@ -14,14 +14,14 @@ namespace Garage3._0.Models
         [Required]
         [CheckPersonNo(12)]
         public string PersonNo { get; set; }
-        [CheckFirstAndLastNames]
+//        [CheckFirstAndLastNames]
         public string FirstName { get; set; }
-        [CheckFirstAndLastNames]
+ //       [CheckFirstAndLastNames]
         public string LastName { get; set; }
-        [CheckEmail]
+//        [CheckEmail]
         public string Email     { get; set; }
         public DateTime RegistrationTime { get; set; }
-        [CheckPassWord]
+//        [CheckPassWord]
         public string Password { get; set; }
         public string FullName => $"{FirstName} {LastName}";
         public MembershipLevels MembershipLevel { get; set; }
