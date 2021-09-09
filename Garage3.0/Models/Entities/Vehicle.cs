@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Garage3._0.Validation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ namespace Garage3._0.Models
     public class Vehicle
     {
         public int Id { get; set; }
+//        [CheckRegistrationNo(7)]
         public string RegNo { get; set; }
         public string Color { get; set; }
         public string Brand { get; set; }

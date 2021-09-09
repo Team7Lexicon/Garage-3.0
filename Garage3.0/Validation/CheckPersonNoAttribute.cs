@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Garage3._0.Validation
 {
-    public class CheckPersonNoAtribute : ValidationAttribute
+    public class CheckPersonNoAttribute : ValidationAttribute
     {
         private readonly int maxLength;
 
-        public CheckPersonNoAtribute(int maxLength)
+        public CheckPersonNoAttribute(int maxLength)
         {
-            ErrorMessageResourceName = "PersonNo must be 12 ccharacters long";
+            ErrorMessageResourceName = "PersonNo must be 12 characters long and only numbers are allowed";
             this.maxLength = maxLength;
         }
 
@@ -22,12 +22,9 @@ namespace Garage3._0.Validation
             {
                 foreach (char c in input)//Check if only numbers are in iput
                 {
-                    if (c < '0' || c > '9')
+                    if ((c < '0' || c > '9') && (input.Length == maxLength))
                         return false;
                 }
-
-                if (input.Length == maxLength)
-                    return true;
             }
             return false;
         }

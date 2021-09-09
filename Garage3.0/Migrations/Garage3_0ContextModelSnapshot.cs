@@ -42,6 +42,7 @@ namespace Garage3._0.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PersonNo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("RegistrationTime")
