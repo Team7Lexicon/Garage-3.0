@@ -9,7 +9,7 @@ namespace Garage3._0.Models
     public class Vehicle
     {
         public int Id { get; set; }
-        [CheckRegistrationNo(7)]
+        //[CheckRegistrationNo(7)]
         public string RegNo { get; set; }//Can be limited to 7 numbers in "frontend"
         public string Color { get; set; }
         public string Brand { get; set; }

@@ -49,10 +49,10 @@ namespace Garage3._0.Controllers
             return View();
         }
  
-        public IActionResult CreateMember()
+        /*public IActionResult CreateMember()
         {
             return View("MembersCreateView");
-        }
+        }*/
 
         // POST: Members/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -67,7 +67,7 @@ namespace Garage3._0.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(member);
+            return View( member);
         }
 
         // GET: Members/Edit/5

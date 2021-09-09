@@ -13,8 +13,8 @@ namespace Garage3._0.Validation
         private readonly int maxLength;
 
         public CheckPersonNoAttribute(int maxLength)
-        {
-            ErrorMessageResourceName = "PersonNo must be 12 characters long and only numbers are allowed and yuo must be at leats 18 years old";
+        {            
+            ErrorMessage  = "PersonNo must be 12 characters long and only numbers are allowed and you must be at least 18 years old";
             this.maxLength = maxLength;
         }
         
@@ -38,7 +38,7 @@ namespace Garage3._0.Validation
                 }
 
             }
-            return false;
+            return true;
         }
         bool checkAge(string personNo)
         {
