@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace Garage3._0.Validation
 {
-    public class CheckPersonNoAtribute : ValidationAttribute
+    public class CheckRegistrationNoAttribute : ValidationAttribute
     {
         private readonly int maxLength;
 
-        public CheckPersonNoAtribute(int maxLength)
+        public CheckRegistrationNoAttribute(int maxLength)
         {
-            ErrorMessageResourceName = "PersonNo must be 12 ccharacters long";
+            ErrorMessageResourceName = "PersonNo must be 12 characters long and only numbers are allowed";
             this.maxLength = maxLength;
         }
 
@@ -20,17 +21,13 @@ namespace Garage3._0.Validation
         {
             if (value is string input)
             {
-                foreach (char c in input)//Check if only numbers are in iput
-                {
-                    if (c < '0' || c > '9')
-                        return false;
-                }
+                string strRegex = "^[0 - 9][A - Z]$";
 
-                if (input.Length == maxLength)
+                Regex rx = new Regex(strRegex);
+                if(rx.IsMatch(input.RegNo) && (input.Length == maxLength))
                     return true;
             }
             return false;
         }
     }
-
 }

@@ -8,7 +8,7 @@ namespace Garage3._0.Validation
 {
     public class CheckFirstAndLastNamesAttribute : ValidationAttribute
     {
-        /*protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             const string errorMessage = "First name cannot be equal to last name";
 
@@ -21,7 +21,7 @@ namespace Garage3._0.Validation
                     return ValidationResult.Success;
             }
             return new ValidationResult(errorMessage);
-        }*/
+        }
     }
     
 }

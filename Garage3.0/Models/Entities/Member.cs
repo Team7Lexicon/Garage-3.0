@@ -11,15 +11,17 @@ namespace Garage3._0.Models
     {
         public int Id { get; set; }
 
-        //[Required]
-        //[CheckPersonNo(12)]
+        [Required]
+        [CheckPersonNo(12)]
         public string PersonNo { get; set; }
         [CheckFirstAndLastNames]
         public string FirstName { get; set; }
         [CheckFirstAndLastNames]
         public string LastName { get; set; }
-        public string Email { get; set; }
+        [CheckEmail]
+        public string Email     { get; set; }
         public DateTime RegistrationTime { get; set; }
+        [CheckPassWord]
         public string Password { get; set; }
         public string FullName => $"{FirstName} {LastName}";
         public MembershipLevels MembershipLevel { get; set; }
