@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Garage3._0.Models
 {
-    public class VehiclesParkedViewModel
+    public class VehiclesViewModel
     {
         public IEnumerable<Vehicle> Vehicles { get; set; }
         public int Id { get; set; }

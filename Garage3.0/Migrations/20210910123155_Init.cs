@@ -13,7 +13,7 @@ namespace Garage3._0.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PersonNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PersonNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -31,7 +31,9 @@ namespace Garage3._0.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ParkingSpotNumber = table.Column<int>(type: "int", nullable: false),
+                    ArrivalTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -59,11 +61,12 @@ namespace Garage3._0.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RegNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Color = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Brand = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Model = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Color = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    Brand = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: true),
+                    Model = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Wheels = table.Column<int>(type: "int", nullable: false),
                     ArrivalTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsParked = table.Column<bool>(type: "bit", nullable: false),
                     MemberId = table.Column<int>(type: "int", nullable: false),
                     VehicleTypeId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -108,6 +111,22 @@ namespace Garage3._0.Migrations
                         principalTable: "Vehicle",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "VehicleType",
+                columns: new[] { "Id", "Name", "ParkingSize" },
+                values: new object[,]
+                {
+                    { 1, "Car", 0.0 },
+                    { 2, "Motorcycle", 0.0 },
+                    { 3, "Moped", 0.0 },
+                    { 4, "Quadbike", 0.0 },
+                    { 5, "Minivan", 0.0 },
+                    { 6, "Van", 0.0 },
+                    { 7, "Truck", 0.0 },
+                    { 8, "Trailer", 0.0 },
+                    { 9, "Bus", 0.0 }
                 });
 
             migrationBuilder.CreateIndex(

@@ -21,7 +21,7 @@ namespace Garage3._0.Controllers
         }
 
         // GET: Vehicles
-        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber, VehiclesParkedViewModel viewModel)
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber, VehiclesViewModel viewModel)
         {
             if (searchString != null)
             {
@@ -44,54 +44,62 @@ namespace Garage3._0.Controllers
                             vehicles :
                             vehicles.Where(m => m.VehicleType == viewModel.VehicleType);
 
-            var viewModel1 = vehicles.Select(v => new VehiclesParkedViewModel
+            IEnumerable<SelectListItem> vehicleTypeSelectItems = await GetVehicleTypeSelectListItems();
+
+            var viewModels = new List<VehiclesViewModel>();
+            IEnumerable<Member> members = _context.Member;
+
+            foreach (Vehicle vehicle in vehicles)
             {
-                RegNo = v.RegNo,
-                FullName = v.Member.FullName,
-                MembershipLevel = v.Member.MembershipLevel,
-                VehicleType = v.VehicleType,
-                ParkedTime = DateTime.Now.Subtract(v.ArrivalTime)
-            });
+                if (vehicle.IsParked)
+                {
+                    VehiclesViewModel viewModel2 = CreateVehiclesParkedViewModel(vehicle, members);
+                    viewModels.Add(viewModel2);
+                }
+            }
+
+            //var viewModels3 = viewModels.AsQueryable();
 
             switch (sortOrder)
             {
                 case "regNo_desc":
-                    viewModel1 = viewModel1.OrderByDescending(s => s.RegNo);
+                    viewModels = viewModels.OrderByDescending(s => s.RegNo).ToList();
                     break;
                 case "FullName":
-                    viewModel1 = viewModel1.OrderBy(s => s.FullName);
+                    viewModels = viewModels.OrderBy(s => s.FullName).ToList();
                     break;
                 case "fullName_desc":
-                    viewModel1 = viewModel1.OrderByDescending(s => s.FullName);
+                    viewModels = viewModels.OrderByDescending(s => s.FullName).ToList();
                     break;
                 case "MembershipLevel":
-                    viewModel1 = viewModel1.OrderBy(s => s.MembershipLevel);
+                    viewModels = viewModels.OrderBy(s => s.MembershipLevel).ToList();
                     break;
                 case "membershipLevel_desc":
-                    viewModel1 = viewModel1.OrderByDescending(s => s.MembershipLevel);
+                    viewModels = viewModels.OrderByDescending(s => s.MembershipLevel).ToList();
                     break;
                 case "VehicleType":
-                    viewModel1 = viewModel1.OrderBy(s => s.VehicleType);
+                    viewModels = viewModels.OrderBy(s => s.VehicleType).ToList();
                     break;
                 case "vehicleType_desc":
-                    viewModel1 = viewModel1.OrderByDescending(s => s.VehicleType);
+                    viewModels = viewModels.OrderByDescending(s => s.VehicleType).ToList();
                     break;
                 case "ParkedTime":
-                    viewModel1 = viewModel1.OrderBy(s => s.ParkedTime);
+                    viewModels = viewModels.OrderBy(s => s.ParkedTime).ToList();
                     break;
                 case "parkedTime_desc":
-                    viewModel1 = viewModel1.OrderByDescending(s => s.ParkedTime);
+                    viewModels = viewModels.OrderByDescending(s => s.ParkedTime).ToList();
                     break;
                 default:
-                    viewModel1 = viewModel1.OrderBy(s => s.RegNo);
+                    viewModels = viewModels.OrderBy(s => s.RegNo).ToList();
                     break;
             }
 
-            int pageSize = 10;
-            return View(await PaginatedList<VehiclesParkedViewModel>.CreateAsync(viewModel1.AsNoTracking(), pageNumber ?? 1, pageSize));
+            //int pageSize = 10;
+            return View(new Tuple<IEnumerable<VehiclesViewModel>, IEnumerable<SelectListItem>>
+                                 (viewModels, vehicleTypeSelectItems));
         }
 
-        public async Task<IActionResult> Filter(VehiclesParkedViewModel viewModel)
+        public async Task<IActionResult> Filter(VehiclesViewModel viewModel)
         {
             var vehicles = string.IsNullOrWhiteSpace(viewModel.RegNo) ?
                             _context.Vehicle :
@@ -101,7 +109,7 @@ namespace Garage3._0.Controllers
                             vehicles :
                             vehicles.Where(m => m.VehicleType == viewModel.VehicleType);
 
-            var model = new VehiclesParkedViewModel
+            var model = new VehiclesViewModel
             {
                 Vehicles = await vehicles.ToListAsync()
             };
@@ -239,6 +247,35 @@ namespace Garage3._0.Controllers
         private bool VehicleExists(int id)
         {
             return _context.Vehicle.Any(e => e.Id == id);
+        }
+
+        private async Task<List<SelectListItem>> GetVehicleTypeSelectListItems()
+        {
+            var vehicleTypeSelectItems = new List<SelectListItem>();
+            var vehicleTypes = await _context.VehicleType.ToListAsync();
+            foreach (VehicleType vehicleType in vehicleTypes)
+            {
+                var item = new SelectListItem()
+                {
+                    Value = vehicleType.Id.ToString(),
+                    Text = vehicleType.Name
+                };
+                vehicleTypeSelectItems.Add(item);
+            }
+            return vehicleTypeSelectItems;
+        }
+
+        private static VehiclesViewModel CreateVehiclesParkedViewModel(Vehicle vehicle, IEnumerable<Member> members)
+        {
+            var model = new VehiclesViewModel();
+            var member = members.FirstOrDefault(m => m.Id == vehicle.MemberId);
+            model.Id = vehicle.Id;
+            model.RegNo = vehicle.RegNo;
+            model.ParkedTime = DateTime.Now - vehicle.ArrivalTime;
+            model.VehicleType = vehicle.VehicleType;
+            model.FullName = member.FullName;
+            model.MembershipLevel = member.MembershipLevel;
+            return model;
         }
     }
 }

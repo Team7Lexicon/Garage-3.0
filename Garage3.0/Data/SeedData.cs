@@ -114,6 +114,7 @@ namespace Garage3._0.Data
                     Model = model,
                     Wheels = wheels,
                     ArrivalTime = arrTime,
+                    IsParked = true
                 };
                 vehicles.Add(vehicle);
             }
@@ -138,7 +139,7 @@ namespace Garage3._0.Data
 
             for (int i = 0; i < 50; i++)
             {
-                var pNo = fake.Person.Personnummer();
+                var pNo =  new Bogus.Person("sv", i+1).Personnummer();
                 var fName = fake.Name.FirstName();
                 var lName = fake.Name.LastName();
                 var regTime = fake.Date.Recent(14);
