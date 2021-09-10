@@ -1,9 +1,10 @@
-﻿/*using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using static AutoMapper.Internal.ExpressionFactory;
 using Garage3._0.Models.ViewModels;
 
 namespace Garage3._0.Validation
@@ -15,26 +16,25 @@ namespace Garage3._0.Validation
             const string errorMessage = "Invalid Email Address";
 
             if (value is string input)
-            {
-                 var model = (MemberViewModel)validationContext.ObjectInstance;//Not created yet
-
-                 if (string.IsNullOrWhiteSpace(model.Email))
+            {              
+                //Check if input is null
+                 if (string.IsNullOrWhiteSpace(input))
                  {
                      return new ValidationResult(errorMessage);
                  }
 
                  Regex ValidEmailRegex = CreateValidEmailRegex();
-
+                  
+                //Create a regex to validate email   
                  Regex CreateValidEmailRegex()
                  {
-                     string validEmailPattern = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|"
-                         + @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)"
-                         + @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
+                     string validEmailPattern = @"^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$";
 
                      return new Regex(validEmailPattern, RegexOptions.IgnoreCase);
                  }
 
-                 if (ValidEmailRegex.IsMatch(model.Email))
+                //if the email is ok then successs
+                 if (ValidEmailRegex.IsMatch(input))
                  {
                      return ValidationResult.Success;
                  }
@@ -43,4 +43,4 @@ namespace Garage3._0.Validation
         }
 
     }
-}*/
+}

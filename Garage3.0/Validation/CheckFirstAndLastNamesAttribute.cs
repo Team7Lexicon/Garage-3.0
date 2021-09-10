@@ -1,8 +1,11 @@
-﻿/*using System.Collections.Generic;
+﻿using Garage3._0.Models;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Garage3._0.Models.ViewModels;
+
 
 namespace Garage3._0.Validation
 {
@@ -14,7 +17,7 @@ namespace Garage3._0.Validation
 
             if (value is string input)
             {
-                var model = (MemberViewModel)validationContext.ObjectInstance;//Not created yet
+                var model = (Member)validationContext.ObjectInstance;
                 if (model.FirstName == model.LastName)
                     return new ValidationResult(errorMessage);
                 else
@@ -25,4 +28,3 @@ namespace Garage3._0.Validation
     }
     
 }
-*/
