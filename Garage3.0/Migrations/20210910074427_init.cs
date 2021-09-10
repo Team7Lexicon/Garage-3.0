@@ -45,8 +45,7 @@ namespace Garage3._0.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ParkingSize = table.Column<int>(type: "int", nullable: false),
-                    VehicleId = table.Column<int>(type: "int", nullable: false)
+                    ParkingSize = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -66,7 +65,6 @@ namespace Garage3._0.Migrations
                     Wheels = table.Column<int>(type: "int", nullable: false),
                     ArrivalTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     MemberId = table.Column<int>(type: "int", nullable: false),
-                    ParkedId = table.Column<int>(type: "int", nullable: true),
                     VehicleTypeId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>

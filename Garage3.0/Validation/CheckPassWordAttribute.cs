@@ -12,13 +12,11 @@ namespace Garage3._0.Validation
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            const string errorMessage = "Password must have at least 8 characters";
+            const string errorMessage = "Password must have at least 8 characters, have upercase and numbers";
 
             if (value is string input)
-            {
-                var model = (MemberViewModel)validationContext.ObjectInstance;
-
-                if (string.IsNullOrWhiteSpace(model.Password))
+            {                
+                if (string.IsNullOrWhiteSpace(input))
                 {                   
                     return new ValidationResult(errorMessage);
                 }
@@ -32,7 +30,7 @@ namespace Garage3._0.Validation
                     return new Regex(validEmailPattern, RegexOptions.IgnoreCase);
                 }
 
-                if(ValidPasswordRegex.IsMatch(model.Password))
+                if (ValidPasswordRegex.IsMatch(input))
                 {
                     return ValidationResult.Success;
                 }

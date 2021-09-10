@@ -18,8 +18,8 @@ namespace Garage3._0.Models
         public string FirstName { get; set; }
  //       [CheckFirstAndLastNames]
         public string LastName { get; set; }
-//        [CheckEmail]
-        public string Email     { get; set; }
+        [CheckEmail]
+        public string Email { get; set; }
         public DateTime RegistrationTime { get; set; }
 //        [CheckPassWord]
         public string Password { get; set; }

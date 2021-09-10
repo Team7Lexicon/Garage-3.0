@@ -16,7 +16,7 @@ namespace Garage3._0.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.9")
+                .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Garage3._0.Models.Member", b =>
@@ -109,9 +109,6 @@ namespace Garage3._0.Migrations
                     b.Property<string>("Model")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ParkedId")
-                        .HasColumnType("int");
-
                     b.Property<string>("RegNo")
                         .HasColumnType("nvarchar(max)");
 
@@ -140,11 +137,8 @@ namespace Garage3._0.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ParkingSize")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VehicleId")
-                        .HasColumnType("int");
+                    b.Property<double>("ParkingSize")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
