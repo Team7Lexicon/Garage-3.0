@@ -1,7 +1,7 @@
-﻿@model Garage3._0.Models.Member
+﻿@model Garage3._0.Models.ViewModels.MemberViewDetailsModel
 
 @{
-    Layout = null;
+    ViewData["Title"] = "Details";
 }
 
 <!DOCTYPE html>
@@ -41,23 +41,29 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Email)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.RegistrationTime)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.RegistrationTime)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-        <dt class = "col-sm-2">
+         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.MembershipLevel)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.MembershipLevel)
+        </dd>
+    </dl>
+</div>
+<div>
+    <h4>Vehicle</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Vehicles)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Vehicles.Count)
+
+            @foreach (var item in Model.Vehicles)
+            {
+                <p>@item.RegNo @item.Color @item.Brand @item.Model @item.ArrivalTime </p>
+            }
+
         </dd>
     </dl>
 </div>

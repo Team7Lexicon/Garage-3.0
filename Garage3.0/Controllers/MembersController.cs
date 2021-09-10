@@ -31,10 +31,12 @@ namespace Garage3._0.Controllers
                             PersonNo = m.PersonNo,
                             FullName = $"{m.FirstName} {m.LastName}",
                             NoOfVehicles = m.Vehicles.Count
-                        }
-                        )
+                        })
                         .ToListAsync();
-            return View(model);
+
+            var model2 = model.AsQueryable().OrderBy(m => m.FullName).ToList();
+            
+            return View(model2);
         }
 
         // GET: Members/Details/5
@@ -44,9 +46,42 @@ namespace Garage3._0.Controllers
             {
                 return NotFound();
             }
+            /*            var model = await _context.Course
+                .Where(c => c.Id == id)
+                .Include(c => c.Enrollments)
+                .ThenInclude(e => e.Student)
+                .Select(vm => new CoursesDetailsViewModel
+                {
+                    Students = vm.Students
+                }).FirstOrDefaultAsync();
 
-            var member = await _context.Member
-                .FirstOrDefaultAsync(m => m.Id == id);
+            */
+            //var student = await _context.Course.Include(c => c.Enrollments)
+            //    .FirstOrDefaultAsync(m => m.Id == id)
+            //    .Select(c => c.Enrollments where CoursId=id)
+            //    .Select(s => new CoursesDetailsViewModel
+            //    {
+            //        Students = s.Student
+            //    });
+
+            //       var member = await _context.Member
+            //           .FirstOrDefaultAsync(m => m.Id == id);
+            var member = await _context.Member//.Include(i => i.Vehicles)
+                .Where(m => m.Id==id)
+ //                              .FirstOrDefaultAsync(m => m.Id == id)
+                .Select(m => new MemberViewDetailsModel
+                {
+                    Id = m.Id,
+                    PersonNo = m.PersonNo,
+                    FirstName = m.FirstName,
+                    LastName = m.LastName,
+                    Email = m.Email,
+                    MembershipLevel = m.MembershipLevel,
+                    Vehicles = m.Vehicles
+                }
+                ).FirstOrDefaultAsync();
+            //.FirstOrDefaultAsync( => m.Id == id);
+            //.ToListAsync();
             if (member == null)
             {
                 return NotFound();
