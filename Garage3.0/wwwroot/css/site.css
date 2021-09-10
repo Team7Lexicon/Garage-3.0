@@ -24,7 +24,7 @@ body {
 }
 
     .hero::before {
-        background-image: url(../NewFolder/hero576x507.jpg);
+        background-image: url(../images/hero576x507.jpg);
         background-size: cover;
         content: "";
         display: block;
@@ -121,30 +121,30 @@ body {
 
 @media {
     .hero::before {
-        background-image: url(../NewFolder/hero576x507.jpg);
+        background-image: url(../images/hero576x507.jpg);
     }
 }
 
 @media (min-width: 576px) {
     .hero::before {
-        background-image: url(../NewFolder/hero768x675.jpg);
+        background-image: url(../images/hero768x675.jpg);
     }
 }
 
 @media (min-width: 768px) {
     .hero::before {
-        background-image: url(../NewFolder/hero992x872.jpg);
+        background-image: url(../images/hero992x872.jpg);
     }
 }
 
 @media (min-width: 992px) {
     .hero::before {
-        background-image: url(../NewFolder/hero1200x1055.jpg);
+        background-image: url(../images/hero1200x1055.jpg);
     }
 }
 
 @media (min-width: 1200px) {
     .hero::before {
-        background-image: url(../NewFolder/hero1500x1319.jpg);
+        background-image: url(../images/hero1500x1319.jpg);
     }
 }
