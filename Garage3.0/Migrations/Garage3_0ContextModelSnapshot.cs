@@ -82,6 +82,12 @@ namespace Garage3._0.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("ArrivalTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ParkingSpotNumber")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("ParkingSpot");
@@ -98,16 +104,22 @@ namespace Garage3._0.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Brand")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
                     b.Property<string>("Color")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<bool>("IsParked")
+                        .HasColumnType("bit");
 
                     b.Property<int>("MemberId")
                         .HasColumnType("int");
 
                     b.Property<string>("Model")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("RegNo")
                         .HasColumnType("nvarchar(max)");
@@ -143,6 +155,62 @@ namespace Garage3._0.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("VehicleType");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Car",
+                            ParkingSize = 0.0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Motorcycle",
+                            ParkingSize = 0.0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Moped",
+                            ParkingSize = 0.0
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Quadbike",
+                            ParkingSize = 0.0
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Minivan",
+                            ParkingSize = 0.0
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Van",
+                            ParkingSize = 0.0
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Truck",
+                            ParkingSize = 0.0
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Trailer",
+                            ParkingSize = 0.0
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Bus",
+                            ParkingSize = 0.0
+                        });
                 });
 
             modelBuilder.Entity("Garage3._0.Models.Parked", b =>
