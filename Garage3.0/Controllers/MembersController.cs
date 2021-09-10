@@ -66,9 +66,10 @@ namespace Garage3._0.Controllers
 
             //       var member = await _context.Member
             //           .FirstOrDefaultAsync(m => m.Id == id);
-            var member = await _context.Member//.Include(i => i.Vehicles)
+            var member = await _context.Member
                 .Where(m => m.Id==id)
- //                              .FirstOrDefaultAsync(m => m.Id == id)
+ //               .Include(m => m.Vehicle)
+                //                              .FirstOrDefaultAsync(m => m.Id == id)
                 .Select(m => new MemberViewDetailsModel
                 {
                     Id = m.Id,

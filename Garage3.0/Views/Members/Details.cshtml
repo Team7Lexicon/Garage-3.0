@@ -52,20 +52,50 @@
 <div>
     <h4>Vehicle</h4>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Vehicles)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Vehicles.Count)
-
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Vehicles)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Vehicles)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Vehicles)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Vehicles)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Vehicles)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
             @foreach (var item in Model.Vehicles)
             {
-                <p>@item.RegNo @item.Color @item.Brand @item.Model @item.ArrivalTime </p>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Color)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ArrivalTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VehicleType.Name)
+                </td>
+            </tr>
             }
+        </tbody>
+    </table>
 
-        </dd>
-    </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
