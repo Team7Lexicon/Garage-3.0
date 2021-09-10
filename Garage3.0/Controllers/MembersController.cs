@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Garage3._0.Data;
 using Garage3._0.Models;
+using Garage3._0.Models.ViewModels;
 
 namespace Garage3._0.Controllers
 {
@@ -22,7 +23,18 @@ namespace Garage3._0.Controllers
         // GET: Members
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Member.ToListAsync());
+            //TODO: Implement OrderBy without error
+            var model = await _context.Member.Include(i => i.Vehicles)
+                        .Select(m => new MemberViewModel
+                        {
+                            Id = m.Id,
+                            PersonNo = m.PersonNo,
+                            FullName = $"{m.FirstName} {m.LastName}",
+                            NoOfVehicles = m.Vehicles.Count
+                        }
+                        )
+                        .ToListAsync();
+            return View(model);
         }
 
         // GET: Members/Details/5
@@ -48,7 +60,7 @@ namespace Garage3._0.Controllers
         {
             return View();
         }
- 
+
         /*public IActionResult CreateMember()
         {
             return View("MembersCreateView");
@@ -59,7 +71,7 @@ namespace Garage3._0.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Member member)
+        public async Task<IActionResult> Create([Bind("Id,PersonNo,FirstName,LastName,Email,RegistrationTime,Password,MembershipLevel")] Member member)
         {
             if (ModelState.IsValid)
             {
@@ -67,7 +79,7 @@ namespace Garage3._0.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View( member);
+            return View(member);
         }
 
         // GET: Members/Edit/5

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Garage3._0.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Garage3._0.Data
 {
@@ -19,5 +20,11 @@ namespace Garage3._0.Data
         public DbSet<Garage3._0.Models.Parked> Parked { get; set; }
         public DbSet<Garage3._0.Models.ParkingSpot> ParkingSpot { get; set; }
         public DbSet<Garage3._0.Models.VehicleType> VehicleType { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information);
+        }
     }
 }

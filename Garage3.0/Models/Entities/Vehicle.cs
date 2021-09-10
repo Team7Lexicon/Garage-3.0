@@ -19,7 +19,6 @@ namespace Garage3._0.Models
 
         //Foreign Keys
         public int MemberId { get; set; }
-        public int? ParkedId { get; set; }
 
         //Navigation Properties
         public Member Member { get; set; }
