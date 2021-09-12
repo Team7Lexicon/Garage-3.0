@@ -67,7 +67,7 @@ namespace Garage3._0.Migrations
                     ArrivalTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsParked = table.Column<bool>(type: "bit", nullable: false),
                     MemberId = table.Column<int>(type: "int", nullable: false),
-                    VehicleTypeId = table.Column<int>(type: "int", nullable: true)
+                    VehicleTypeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -83,7 +83,7 @@ namespace Garage3._0.Migrations
                         column: x => x.VehicleTypeId,
                         principalTable: "VehicleType",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

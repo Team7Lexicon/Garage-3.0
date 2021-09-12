@@ -12,10 +12,9 @@ namespace Garage3._0.Models
     {
         public int Id { get; set; }
         //[CheckRegistrationNo(7)]
+        [Required(ErrorMessage = "Registration number is required")]
         public string RegNo { get; set; }
         [MaxLength(20, ErrorMessage = "20 characters max")]
-        [Display(Name = "Type")]
-        public VehicleType VehicleType { get; set; }
         public string Color { get; set; }
         [MaxLength(25, ErrorMessage = "25 characters max")]
         public string Brand { get; set; }
@@ -28,11 +27,11 @@ namespace Garage3._0.Models
         public bool IsParked { get; set; }
         [Required]
         public int MemberId { get; set; }
-        [Required(ErrorMessage = "Person number is required")]
-        [RegularExpression(@"^\d{12}$", ErrorMessage = "Person number must be 12 digits (only numbers)")]
+        //[Required(ErrorMessage = "Person number is required")]
+        //[RegularExpression(@"^\d{12}$", ErrorMessage = "Person number must be 12 digits (only numbers)")]
         public string PersonNo { get; set; }
-        [Required(ErrorMessage = "Vehicle Type is required")]
-        public int VehiceTypeId { get; set; }
+        [Required(ErrorMessage = "Vehicle type is required")]
+        public int VehicleTypeId { get; set; }
         [NotMapped]
         public IEnumerable<SelectListItem> GetVehiclesType { get; set; }
         public IEnumerable<SelectListItem> GetMembers { get; set; }

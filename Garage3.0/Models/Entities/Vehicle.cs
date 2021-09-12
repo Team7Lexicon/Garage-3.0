@@ -25,6 +25,7 @@ namespace Garage3._0.Models
         public bool IsParked { get; set; }
         //Foreign Keys
         public int MemberId { get; set; }
+        public int VehicleTypeId { get; set; }
 
         //Navigation Properties
         public Member Member { get; set; }
