@@ -1,11 +1,14 @@
-﻿@model Tuple<IEnumerable<VehiclesViewModel>, IEnumerable<SelectListItem>>
+﻿@model Tuple<IEnumerable<VehiclesIndexViewModel>, IEnumerable<SelectListItem>>
 @inject Garage3._0.Services.ITypeSelectService service
 
 @{
-    ViewData["Title"] = "Vehicles Index";
+    ViewData["Title"] = "Vehicles List";
 }
 
 <h1>Vehicles List</h1>
+
+<a asp-action="CheckInNewVehicle" type="button" class="btn btn-info btn">Check-in new vehicle</a>
+<br />
 
 <form asp-action="Index">
     <div class="input-group mb-3">
@@ -62,9 +65,9 @@
                     @item.ParkedTime.Days:@item.ParkedTime.Hours:@item.ParkedTime.Minutes
                 </td>
                 <td>
-                    <a asp-controller="Vehicles" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-controller="Vehicles" asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-controller="Vehicles" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-controller="Vehicles" asp-action="EditVehicle" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-controller="Vehicles" asp-action="DetailsVehicle" asp-route-id="@item.Id">Details</a> |
+                    <a asp-controller="Vehicles" asp-action="CheckOutVehicle" asp-route-id="@item.Id">Check-out</a>
                 </td>
             </tr>
         }

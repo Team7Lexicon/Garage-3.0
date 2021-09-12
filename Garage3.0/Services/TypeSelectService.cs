@@ -17,17 +17,27 @@ namespace Garage3._0.Services
             this.db = db;
         }
 
-        public async Task<IEnumerable<SelectListItem>> GetGenresAsync()
+        public async Task<IEnumerable<SelectListItem>> GetTypeAsync()
         {
             return await db.Vehicle
                         .Select(m => m.VehicleType)
                         .Distinct()
                         .Select(g => new SelectListItem
                         {
-                            Text = g.ToString(),
-                            Value = g.ToString()
+                            Text = g.Name.ToString(),
+                            Value = g.Id.ToString()
                         })
                         .ToListAsync();
+        }
+
+        public async Task<IEnumerable<SelectListItem>> GetVehicleTypeAsync()
+        {
+            return await db.VehicleType.OrderBy(v => v.Name)
+                    .Select(r => new SelectListItem
+                    {
+                    Text = r.Name.ToString(),
+                    Value = r.Id.ToString()
+                    }).ToListAsync();
         }
     }
 }

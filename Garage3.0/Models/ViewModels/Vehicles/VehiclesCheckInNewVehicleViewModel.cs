@@ -3,32 +3,38 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Garage3._0.Models
 {
-    public class Vehicle
+    public class VehiclesCheckInNewVehicleViewModel
     {
         public int Id { get; set; }
         //[CheckRegistrationNo(7)]
         public string RegNo { get; set; }
         [MaxLength(20, ErrorMessage = "20 characters max")]
+        [Display(Name = "Type")]
+        public VehicleType VehicleType { get; set; }
         public string Color { get; set; }
         [MaxLength(25, ErrorMessage = "25 characters max")]
         public string Brand { get; set; }
         [MaxLength(50, ErrorMessage = "50 characters max")]
         public string Model { get; set; }
-        [Range(1,10, ErrorMessage = "Number of wheels cannot be negative. 10 wheels max")]
+        [Range(1, 10, ErrorMessage = "Number of wheels cannot be negative. 10 wheels max")]
         [Display(Name = "No of wheels")]
         public int Wheels { get; set; }
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime ArrivalTime { get; set; }
         public bool IsParked { get; set; }
-        //Foreign Keys
+        [Required]
         public int MemberId { get; set; }
-
-        //Navigation Properties
-        public Member Member { get; set; }
-        public VehicleType VehicleType { get; set; }
-        public ICollection<Parked> Parkeds { get; set; }
+        [Required(ErrorMessage = "Person number is required")]
+        [RegularExpression(@"^\d{12}$", ErrorMessage = "Person number must be 12 digits (only numbers)")]
+        public string PersonNo { get; set; }
+        [Required(ErrorMessage = "Vehicle Type is required")]
+        public int VehiceTypeId { get; set; }
+        [NotMapped]
+        public IEnumerable<SelectListItem> GetVehiclesType { get; set; }
+        public IEnumerable<SelectListItem> GetMembers { get; set; }
     }
 }
