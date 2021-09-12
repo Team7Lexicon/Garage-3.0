@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Garage3._0.Models;
 using Microsoft.Extensions.Logging;
 
 namespace Garage3._0.Data
@@ -25,59 +21,6 @@ namespace Garage3._0.Data
         {
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.LogTo(Console.WriteLine, LogLevel.Information);
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Member>();
-            //.HasAlternateKey(m => m.Email);
-            modelBuilder.Entity<VehicleType>().HasData(
-                new VehicleType
-                {
-                    Id = 1,
-                    Name = "Car"
-                },
-                new VehicleType
-                {
-                    Id = 2,
-                    Name = "Motorcycle"
-                },
-                new VehicleType
-                {
-                    Id = 3,
-                    Name = "Moped"
-                },
-                new VehicleType
-                {
-                    Id = 4,
-                    Name = "Quadbike"
-                },
-                new VehicleType
-                {
-                    Id = 5,
-                    Name = "Minivan"
-                },
-                new VehicleType
-                {
-                    Id = 6,
-                    Name = "Van"
-                },
-                new VehicleType
-                {
-                    Id = 7,
-                    Name = "Truck"
-                },
-                new VehicleType
-                {
-                    Id = 8,
-                    Name = "Trailer"
-                },
-                new VehicleType
-                {
-                    Id = 9,
-                    Name = "Bus"
-                });
-
         }
     }
 }

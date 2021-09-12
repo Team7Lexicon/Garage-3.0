@@ -6,6 +6,6 @@ namespace Garage3._0.Services
 {
     public interface ITypeSelectService
     {
-        Task<IEnumerable<SelectListItem>> GetGenresAsync();
+        Task<IEnumerable<SelectListItem>> GetTypeAsync();
     }
 }
