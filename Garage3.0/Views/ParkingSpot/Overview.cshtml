@@ -1,0 +1,39 @@
+﻿@model ParkinOverviewModel
+
+@{
+    ViewData["Title"] = "Overview";
+    int i = 0;
+}
+
+<h1>Overview</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>                
+             Parked vehicles   "@Model.totalParkingPlace";
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+ @foreach (var item in @Model.Result)
+ {
+     i++;
+      @:<tr>
+          <td> 
+              
+             [ @item ]
+
+          </td>
+      @if(i == 10)
+      {
+        i=0;
+        @:</tr>
+      }
+ }
+ </tbody>
+</table>
