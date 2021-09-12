@@ -56,19 +56,19 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Vehicles)
+                    @Html.DisplayNameFor(model => model.Vehicles.ToList()[0].RegNo)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Vehicles)
+                    @Html.DisplayNameFor(model => model.Vehicles.ToList()[0].Color)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Vehicles)
+                    @Html.DisplayNameFor(model => model.Vehicles.ToList()[0].Brand)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Vehicles)
+                    @Html.DisplayNameFor(model => model.Vehicles.ToList()[0].ArrivalTime)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Vehicles)
+                    @Html.DisplayNameFor(model => model.Vehicles.ToList()[0].VehicleType.Name)
                 </th>
             </tr>
         </thead>

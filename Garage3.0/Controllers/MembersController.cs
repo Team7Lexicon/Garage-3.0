@@ -46,30 +46,9 @@ namespace Garage3._0.Controllers
             {
                 return NotFound();
             }
-            /*            var model = await _context.Course
-                .Where(c => c.Id == id)
-                .Include(c => c.Enrollments)
-                .ThenInclude(e => e.Student)
-                .Select(vm => new CoursesDetailsViewModel
-                {
-                    Students = vm.Students
-                }).FirstOrDefaultAsync();
 
-            */
-            //var student = await _context.Course.Include(c => c.Enrollments)
-            //    .FirstOrDefaultAsync(m => m.Id == id)
-            //    .Select(c => c.Enrollments where CoursId=id)
-            //    .Select(s => new CoursesDetailsViewModel
-            //    {
-            //        Students = s.Student
-            //    });
-
-            //       var member = await _context.Member
-            //           .FirstOrDefaultAsync(m => m.Id == id);
             var member = await _context.Member
                 .Where(m => m.Id==id)
- //               .Include(m => m.Vehicle)
-                //                              .FirstOrDefaultAsync(m => m.Id == id)
                 .Select(m => new MemberViewDetailsModel
                 {
                     Id = m.Id,
@@ -81,8 +60,6 @@ namespace Garage3._0.Controllers
                     Vehicles = m.Vehicles
                 }
                 ).FirstOrDefaultAsync();
-            //.FirstOrDefaultAsync( => m.Id == id);
-            //.ToListAsync();
             if (member == null)
             {
                 return NotFound();
@@ -112,6 +89,7 @@ namespace Garage3._0.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(member);
+                member.RegistrationTime = DateTime.Now;
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

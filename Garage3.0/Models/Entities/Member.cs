@@ -30,3 +30,4 @@ namespace Garage3._0.Models
         public ICollection<Vehicle> Vehicles { get; set; }
     }
 }
+ 
