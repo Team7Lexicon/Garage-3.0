@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Garage3._0.Data
@@ -16,22 +17,22 @@ namespace Garage3._0.Data
 
         internal static async Task InitAsync(IServiceProvider services)
         {
-            using(var db = services.GetRequiredService<Garage3_0Context>())
+            using (var db = services.GetRequiredService<Garage3_0Context>())
             {
                 if (await db.Member.AnyAsync()) return;
 
                 fake = new Faker();
 
-                var members = GetMembers();
-                var parkingSpots = GetParkingSpots();
+                List<Member> membersList = GetMembers(50);
+                var parkingSpots = GetParkingSpots(100);
                 var vehicleTypes = GetVehicleTypes();
-                await db.AddRangeAsync(members);
+                await db.AddRangeAsync(membersList);
                 await db.AddRangeAsync(parkingSpots);
                 await db.AddRangeAsync(vehicleTypes);
 
                 await db.SaveChangesAsync();
 
-                var vehicles = GetVehicles(members, vehicleTypes);
+                var vehicles = GetVehicles(50, membersList, vehicleTypes);
                 await db.AddRangeAsync(vehicles);
                 await db.SaveChangesAsync();
 
@@ -41,7 +42,6 @@ namespace Garage3._0.Data
             }
         }
 
-        //Todo: Name = name.VehicleType... Function. Create list from database. Random assignment
         private static List<VehicleType> GetVehicleTypes()
         {
             List<VehicleType> vehicleTypes = new List<VehicleType>
@@ -79,86 +79,85 @@ namespace Garage3._0.Data
             }
             return parkeds;
         }
-        
-        private static List<ParkingSpot> GetParkingSpots()
+
+        private static List<ParkingSpot> GetParkingSpots(int amount)
         {
             var parkingSpots = new List<ParkingSpot>();
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < amount; i++)
             {
-                var parkingSpot = new ParkingSpot { };
+                var parkingSpot = new ParkingSpot {
+                    ParkingSpotNumber = i + 1
+                };
                 parkingSpots.Add(parkingSpot);
             }
             return parkingSpots;
         }
 
-        private static List<Vehicle> GetVehicles(List<Member> members, List<VehicleType> vehicleTypes)
+        private static List<Vehicle> GetVehicles(int amount, List<Member> membersList, List<VehicleType> vehicleTypes)
         {
             var vehicles = new List<Vehicle>();
 
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < amount; i++)
             {
                 string regNo1 = fake.Lorem.Letter(3).ToUpper();
-                var regNo2 = fake.Random.Number(0, 999);
-                var color = fake.Commerce.Color();
-                var brand = fake.Vehicle.Manufacturer();
-                var model = fake.Vehicle.Model();
-                var wheels = fake.Random.Even(2, 4);
-                var arrTime = fake.Date.Recent(7);
+                var regNo2 = fake.Random.Number(001, 999);
 
                 var vehicle = new Vehicle
                 {
                     RegNo = $"{regNo1}{regNo2}",
-                    Color = color,
-                    Brand = brand,
-                    Model = model,
-                    Wheels = wheels,
-                    ArrivalTime = arrTime,
-                    IsParked = true
+                    VehicleType = fake.Random.ListItem<VehicleType>(vehicleTypes),
+                    Member = fake.Random.ListItem<Member>(membersList),
+                    Color = fake.Commerce.Color(),
+                    Brand = fake.Vehicle.Manufacturer(),
+                    Model = fake.Vehicle.Model(),
+                    Wheels = fake.Random.Even(2, 4),
+                    ArrivalTime = fake.Date.Recent(7),
+                    IsParked = fake.Random.Bool()
                 };
                 vehicles.Add(vehicle);
             }
 
+
             foreach (var vehicle in vehicles)
             {
-                var r = fake.Random.Int(0, 49);
-                vehicle.Member = members[r];
-                vehicle.MemberId = members[r].Id;
-                int randomVehicleType = fake.Random.Int(0, 8);
-                vehicle.VehicleType = vehicleTypes[randomVehicleType];
+                vehicle.MemberId = vehicle.Member.Id;
             }
 
             return vehicles;
         }
 
-        private static List<Member> GetMembers()
+        private static List<Member> GetMembers(int amount)
         {
-            fake = new Faker("sv");
+            var membersList = new List<Member>();
 
-            var members = new List<Member>();
-
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < amount; i++)
             {
-                var pNo =  new Bogus.Person("sv", i+1).Personnummer();
-                var fName = fake.Name.FirstName();
-                var lName = fake.Name.LastName();
-                var regTime = fake.Date.Recent(14);
-                var pw = fake.Internet.Password(8);
-                var mshl = fake.Random.Number(0, 3);
+                int year = fake.Random.Int(1931, 2002);
+                var month = fake.Random.Int(11, 12);
+                var day = fake.Random.Int(10, 28);
+                var pNo = new StringBuilder();
+                pNo.Append(year);
+                pNo.Append(month);
+                pNo.Append(day);
+                pNo.Append(fake.Random.Int(0001, 9999));
+                var firstName = fake.Name.FirstName();
+                var lastName = fake.Name.LastName();
+                int mshl = fake.Random.Number(0, 3);
 
                 var member = new Member
                 {
-                    PersonNo = pNo,
-                    FirstName = fName,
-                    LastName = lName,
-                    Email = fake.Internet.Email($"{fName} {lName}"),
-                    RegistrationTime = regTime,
-                    Password = pw,
+                    PersonNo = pNo.ToString(),
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Email = fake.Internet.Email($"{firstName} {lastName}"),
+                    RegistrationTime = fake.Date.Recent(14),
+                    Password = fake.Internet.Password(8),
                     MembershipLevel = (MembershipLevels)mshl
                 };
-                members.Add(member);
+                membersList.Add(member);
             }
-            return members;
+            return membersList;
         }
     }
 }

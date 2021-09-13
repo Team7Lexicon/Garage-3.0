@@ -13,6 +13,5 @@ namespace Garage3._0.Models
 
         //Navigation Property        
         public ICollection<Parked> Parkeds { get; set; }
-        public DateTime ArrivalTime { get; set; }
     }
 }

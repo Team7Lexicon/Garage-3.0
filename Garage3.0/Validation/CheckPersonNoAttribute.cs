@@ -32,7 +32,7 @@ namespace Garage3._0.Validation
                 }
 
                 //if the members age is < 18 then we return false 
-                if (!checkAge(input))
+                if (!CheckAge(input))
                 {
                     return false;
                 }
@@ -40,7 +40,7 @@ namespace Garage3._0.Validation
             }
             return true;
         }
-        bool checkAge(string personNo)
+        bool CheckAge(string personNo)
         {
             //Convert persNumbert to DateTime
             string year = personNo.Substring(0, 4);

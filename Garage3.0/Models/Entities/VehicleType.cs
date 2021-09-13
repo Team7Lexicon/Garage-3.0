@@ -8,7 +8,7 @@ namespace Garage3._0.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public double ParkingSize { get; set; } = 0;
+        public double ParkingSize { get; set; }
 
         public int CompareTo(object obj)
         {

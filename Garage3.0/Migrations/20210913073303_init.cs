@@ -32,8 +32,7 @@ namespace Garage3._0.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ParkingSpotNumber = table.Column<int>(type: "int", nullable: false),
-                    ArrivalTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    ParkingSpotNumber = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -68,7 +67,7 @@ namespace Garage3._0.Migrations
                     ArrivalTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsParked = table.Column<bool>(type: "bit", nullable: false),
                     MemberId = table.Column<int>(type: "int", nullable: false),
-                    VehicleTypeId = table.Column<int>(type: "int", nullable: true)
+                    VehicleTypeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -84,7 +83,7 @@ namespace Garage3._0.Migrations
                         column: x => x.VehicleTypeId,
                         principalTable: "VehicleType",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -111,22 +110,6 @@ namespace Garage3._0.Migrations
                         principalTable: "Vehicle",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.InsertData(
-                table: "VehicleType",
-                columns: new[] { "Id", "Name", "ParkingSize" },
-                values: new object[,]
-                {
-                    { 1, "Car", 0.0 },
-                    { 2, "Motorcycle", 0.0 },
-                    { 3, "Moped", 0.0 },
-                    { 4, "Quadbike", 0.0 },
-                    { 5, "Minivan", 0.0 },
-                    { 6, "Van", 0.0 },
-                    { 7, "Truck", 0.0 },
-                    { 8, "Trailer", 0.0 },
-                    { 9, "Bus", 0.0 }
                 });
 
             migrationBuilder.CreateIndex(

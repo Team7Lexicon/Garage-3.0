@@ -26,5 +26,4 @@ namespace Garage3._0.Validation
             return new ValidationResult(errorMessage);
         }
     }
-    
 }

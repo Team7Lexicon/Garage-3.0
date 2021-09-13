@@ -82,9 +82,6 @@ namespace Garage3._0.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("ArrivalTime")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("ParkingSpotNumber")
                         .HasColumnType("int");
 
@@ -124,7 +121,7 @@ namespace Garage3._0.Migrations
                     b.Property<string>("RegNo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("VehicleTypeId")
+                    b.Property<int>("VehicleTypeId")
                         .HasColumnType("int");
 
                     b.Property<int>("Wheels")
@@ -155,62 +152,6 @@ namespace Garage3._0.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("VehicleType");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Car",
-                            ParkingSize = 0.0
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Motorcycle",
-                            ParkingSize = 0.0
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Moped",
-                            ParkingSize = 0.0
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Quadbike",
-                            ParkingSize = 0.0
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Minivan",
-                            ParkingSize = 0.0
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Van",
-                            ParkingSize = 0.0
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "Truck",
-                            ParkingSize = 0.0
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Trailer",
-                            ParkingSize = 0.0
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "Bus",
-                            ParkingSize = 0.0
-                        });
                 });
 
             modelBuilder.Entity("Garage3._0.Models.Parked", b =>
@@ -242,7 +183,9 @@ namespace Garage3._0.Migrations
 
                     b.HasOne("Garage3._0.Models.VehicleType", "VehicleType")
                         .WithMany("Vehicles")
-                        .HasForeignKey("VehicleTypeId");
+                        .HasForeignKey("VehicleTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Member");
 
