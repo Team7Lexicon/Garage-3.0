@@ -128,7 +128,7 @@ namespace Garage3._0.Controllers
             var vehicle = await _context.Vehicle
                 .Include(v => v.Member)
                 .Include(v => v.VehicleType)
-                .FirstOrDefaultAsync(v => v.Id == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             var vehiclesDetailsVehicleViewModel = new VehiclesDetailsVehicleViewModel
             {
@@ -170,28 +170,17 @@ namespace Garage3._0.Controllers
         {
             if (ModelState.IsValid)
             {
-                var vehicle = new Vehicle
-                {
-                    RegNo = vehiclesCheckInNewVehicleViewModel.RegNo,
-                    VehicleTypeId = vehiclesCheckInNewVehicleViewModel.VehicleTypeId,
-                    Color = vehiclesCheckInNewVehicleViewModel.Color,
-                    Brand = vehiclesCheckInNewVehicleViewModel.Brand,
-                    Model = vehiclesCheckInNewVehicleViewModel.Model,
-                    Wheels = vehiclesCheckInNewVehicleViewModel.Wheels,
-                    MemberId = vehiclesCheckInNewVehicleViewModel.MemberId,
-                    ArrivalTime = DateTime.Now,
-                    IsParked = true
-                 };
-
+                vehiclesCheckInNewVehicleViewModel.ArrivalTime = DateTime.Now;
+                vehiclesCheckInNewVehicleViewModel.IsParked = true;
+                _context.Add(vehiclesCheckInNewVehicleViewModel);
                 try
                 {
-                    _context.Add(vehicle);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(DetailsVehicle), new { id = vehiclesCheckInNewVehicleViewModel.Id });
                 }
                 catch (Exception)
                 {
-                    ViewBag.ExistMessage = $"A vehicle with license plate {vehiclesCheckInNewVehicleViewModel.RegNo} is already registered";
+                    ViewBag.ExistMessage = $"A vehicle with license plate {vehiclesCheckInNewVehicleViewModel.RegNo} is allready registered";
                 }
                 return RedirectToAction(nameof(DetailsVehicle), new { id = vehiclesCheckInNewVehicleViewModel.Id });
         }
@@ -249,7 +238,7 @@ namespace Garage3._0.Controllers
                 .Select(x => new SelectListItem
                 {
                     Value = x.Id.ToString(),
-                    Text = x.Id + ". " + x.FullName
+                    Text = x.FullName + "( " + x.Email + ")"
                 }).ToList();
             return (memberList);
         }
@@ -257,7 +246,7 @@ namespace Garage3._0.Controllers
         // POST: Vehicles/EditVehicle/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditVehicle(int id, [Bind("Id,RegNo,VehicleTypeId,Color,Brand,Model,Wheels")] VehiclesEditVehicleViewModel vehiclesEditVehicleViewModel)
+        public async Task<IActionResult> EditVehicle(int id, [Bind("Id,RegNo,VehicleType,Color,Brand,Model,Wheels")] VehiclesEditVehicleViewModel vehiclesEditVehicleViewModel)
         {
             var vehicle = await _context.Vehicle
                 .FirstOrDefaultAsync(m => m.Id == id);

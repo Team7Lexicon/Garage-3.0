@@ -20,6 +20,6 @@ namespace Garage3._0.Models
 
         [Display(Name = "Type")]
         public VehicleType VehicleType { get; set; }
-        public TimeSpan ParkedTime { get; set; }
+        public TimeSpan? ParkedTime { get; set; }
     }
 }

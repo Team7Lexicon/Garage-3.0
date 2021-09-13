@@ -34,11 +34,13 @@ namespace Garage3._0.Data
 
                 var vehicles = GetVehicles(50, membersList, vehicleTypes);
                 await db.AddRangeAsync(vehicles);
+
                 await db.SaveChangesAsync();
 
-                //var parkeds = GetParkeds(vehicles, parkingSpots);
-                //await db.AddRangeAsync(parkeds);
-                //await db.SaveChangesAsync();
+                var parkeds = GetParkeds(vehicles, parkingSpots);
+                await db.AddRangeAsync(parkeds);
+                
+                await db.SaveChangesAsync();
             }
         }
 
@@ -61,22 +63,18 @@ namespace Garage3._0.Data
         private static List<Parked> GetParkeds(List<Vehicle> vehicles, List<ParkingSpot> parkingSpots)
         {
             var parkeds = new List<Parked>();
-            {
-                foreach (var vehicle in vehicles)
+
+            var newVehicles = vehicles.FindAll(v => v.VehicleType.ParkingSize == 1);
+
+            foreach (var newVehicle in newVehicles)
                 {
-                    //Earlier if fake.Random.Int(0,2) == 0, giving approximately 50 % Parkeds)
-                    if (vehicle.VehicleType.ParkingSize == 1)
-                    {
                         var parked = new Parked
                         {
-                            //ParkingSpotId = parkingSpot.Id,
-                            ParkingSpotId = 1,
-                            VehicleId = vehicle.Id,
+                            VehicleId = newVehicle.Id,
                         };
+                        parked.ParkingSpotId = newVehicle.Id;
                         parkeds.Add(parked);
-                    }
                 }
-            }
             return parkeds;
         }
 
@@ -100,12 +98,9 @@ namespace Garage3._0.Data
 
             for (int i = 0; i < amount; i++)
             {
-                string regNo1 = fake.Lorem.Letter(3).ToUpper();
-                var regNo2 = fake.Random.Number(001, 999);
-
                 var vehicle = new Vehicle
                 {
-                    RegNo = $"{regNo1}{regNo2}",
+                    RegNo = fake.Random.Replace("???###").ToUpper(),
                     VehicleType = fake.Random.ListItem<VehicleType>(vehicleTypes),
                     Member = fake.Random.ListItem<Member>(membersList),
                     Color = fake.Commerce.Color(),
