@@ -126,11 +126,11 @@ namespace Garage3._0.Controllers
             }
 
             var vehicle = await _context.Vehicle
-                .Include(v => v.Member)
-                .Include(v => v.VehicleType)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .Include(m => m.Member)
+                .Include(t => t.VehicleType)
+                .FirstOrDefaultAsync(v => v.Id == id);
 
-            var vehiclesDetailsVehicleViewModel = new VehiclesDetailsVehicleViewModel
+            var vehiclesDetailsVehicleViewModel = new VehiclesDetailsViewModel
             {
                 Id = vehicle.Id,
                 RegNo = vehicle.RegNo,
@@ -153,7 +153,7 @@ namespace Garage3._0.Controllers
         // GET: Vehicles/CheckInNewVehicle
         public IActionResult CheckInNewVehicle()
         {
-            var vehiclesCheckInNewVehicleViewModel = new VehiclesCheckInNewVehicleViewModel
+            var vehiclesCheckInNewVehicleViewModel = new VehiclesCheckInNewViewModel
             {
                 GetVehiclesType = GetTypeOfVehicle(),
                 GetMembers = GetMemberList(),
@@ -166,21 +166,32 @@ namespace Garage3._0.Controllers
         // POST: Vehicles/CheckInNewVehicle/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CheckInNewVehicle([Bind("Id,RegNo,Color,Brand,Model,Wheels,MemberId,VehicleTypeId")] VehiclesCheckInNewVehicleViewModel vehiclesCheckInNewVehicleViewModel)
+        public async Task<IActionResult> CheckInNewVehicle([Bind("Id,RegNo,Color,Brand,Model,Wheels,MemberId,VehicleTypeId")] VehiclesCheckInNewViewModel vehiclesCheckInNewVehicleViewModel)
         {
             if (ModelState.IsValid)
             {
-                vehiclesCheckInNewVehicleViewModel.ArrivalTime = DateTime.Now;
-                vehiclesCheckInNewVehicleViewModel.IsParked = true;
-                _context.Add(vehiclesCheckInNewVehicleViewModel);
+                var vehicle = new Vehicle
+                {
+                    RegNo = vehiclesCheckInNewVehicleViewModel.RegNo,
+                    VehicleTypeId = vehiclesCheckInNewVehicleViewModel.VehicleTypeId,
+                    Color = vehiclesCheckInNewVehicleViewModel.Color,
+                    Brand = vehiclesCheckInNewVehicleViewModel.Brand,
+                    Model = vehiclesCheckInNewVehicleViewModel.Model,
+                    Wheels = vehiclesCheckInNewVehicleViewModel.Wheels,
+                    MemberId = vehiclesCheckInNewVehicleViewModel.MemberId,
+                    ArrivalTime = DateTime.Now,
+                    IsParked = true
+                };
+
                 try
                 {
+                    _context.Add(vehicle);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(DetailsVehicle), new { id = vehiclesCheckInNewVehicleViewModel.Id });
                 }
                 catch (Exception)
                 {
-                    ViewBag.ExistMessage = $"A vehicle with license plate {vehiclesCheckInNewVehicleViewModel.RegNo} is allready registered";
+                    ViewBag.ExistMessage = $"A vehicle with license plate {vehiclesCheckInNewVehicleViewModel.RegNo} is already registered";
                 }
                 return RedirectToAction(nameof(DetailsVehicle), new { id = vehiclesCheckInNewVehicleViewModel.Id });
         }
@@ -197,7 +208,7 @@ namespace Garage3._0.Controllers
 
             var vehicle = await _context.Vehicle.FindAsync(id);
 
-            var vehiclesEditVehicleViewModel = new VehiclesEditVehicleViewModel
+            var vehiclesEditVehicleViewModel = new VehiclesEditViewModel
             {
                 Id = vehicle.Id,
                 RegNo = vehicle.RegNo,
@@ -238,7 +249,7 @@ namespace Garage3._0.Controllers
                 .Select(x => new SelectListItem
                 {
                     Value = x.Id.ToString(),
-                    Text = x.FullName + "( " + x.Email + ")"
+                    Text = x.Id + ". " + x.FullName
                 }).ToList();
             return (memberList);
         }
@@ -246,7 +257,7 @@ namespace Garage3._0.Controllers
         // POST: Vehicles/EditVehicle/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditVehicle(int id, [Bind("Id,RegNo,VehicleType,Color,Brand,Model,Wheels")] VehiclesEditVehicleViewModel vehiclesEditVehicleViewModel)
+        public async Task<IActionResult> EditVehicle(int id, [Bind("Id,RegNo,VehicleTypeId,Color,Brand,Model,Wheels")] VehiclesEditViewModel vehiclesEditVehicleViewModel)
         {
             var vehicle = await _context.Vehicle
                 .FirstOrDefaultAsync(m => m.Id == id);
