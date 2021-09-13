@@ -12,11 +12,11 @@ namespace Garage3._0.Models
         public int Id { get; set; }
 
         [Required]
-        //[CheckPersonNo(12)]
+        [CheckPersonNo(12)]
         public string PersonNo { get; set; }
-        //[CheckFirstAndLastNames]
+        [CheckFirstAndLastNames]
         public string FirstName { get; set; }
-        //[CheckFirstAndLastNames]
+        [CheckFirstAndLastNames]
         public string LastName { get; set; }
         [CheckEmail]
         public string Email { get; set; }
