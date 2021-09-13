@@ -25,6 +25,8 @@ namespace Garage3._0.Validation
                 //Remove blanc spaces and dash characters
                 input = input.Replace(" ", "").Replace("-", "");
 
+                if (input.Length != maxLength) return false;
+
                 foreach (char c in input)//Check if only numbers are in input
                 {
                     if ((c < '0' || c > '9') && (input.Length == maxLength))

@@ -48,7 +48,9 @@ namespace Garage3._0.Controllers
             }
 
             var member = await _context.Member
+ //               .Include(t => t.VehicleType)
                 .Where(m => m.Id==id)
+ //               .Select(t => t.VehicleType.Id = m.Vehicle.VehicleTypeId)
                 .Select(m => new MemberViewDetailsModel
                 {
                     Id = m.Id,
