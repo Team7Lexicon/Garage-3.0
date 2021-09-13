@@ -8,6 +8,7 @@ namespace Garage3._0.Models
     public class ParkinOverviewModel
     {
         public IEnumerable<int> Result { get; set; }
+        public IQueryable<Parked> PardkedVeicType { get; set; }
         public int totalParkingPlace { get; set; }
     }
 }

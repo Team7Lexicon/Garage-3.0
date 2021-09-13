@@ -12,6 +12,7 @@ namespace Garage3._0.Models
         //Foreign Keys
         public int ParkingSpotId { get; set; }
         public int VehicleId { get; set; }
+        public int VehicleType { get; set; }//William
 
         //Navigation properties        
         public ParkingSpot ParkingSpot { get; set; }

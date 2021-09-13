@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Garage3._0.Migrations
 {
     [DbContext(typeof(Garage3_0Context))]
-    [Migration("20210911130700_init")]
-    partial class init
+    [Migration("20210912154241_int")]
+    partial class @int
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -66,6 +66,9 @@ namespace Garage3._0.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("VehicleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VehicleType")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

@@ -66,6 +66,9 @@ namespace Garage3._0.Migrations
                     b.Property<int>("VehicleId")
                         .HasColumnType("int");
 
+                    b.Property<int>("VehicleType")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ParkingSpotId");

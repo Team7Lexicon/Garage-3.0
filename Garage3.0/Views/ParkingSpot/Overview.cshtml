@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Overview";
-    int i = 0;
+    int row = 0;
 }
 
 <h1>Overview</h1>
@@ -22,16 +22,17 @@
     <tbody>
  @foreach (var item in @Model.Result)
  {
-     i++;
+
+     row++;
       @:<tr>
           <td> 
               
-             [ @item ]
+             [ @item , @Model.PardkedVeicType]<!-- [10, Minivan] -->
 
           </td>
-      @if(i == 10)
+      if(row == 10)
       {
-        i=0;
+        row=0;
         @:</tr>
       }
  }
