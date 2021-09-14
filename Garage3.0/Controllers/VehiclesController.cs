@@ -220,6 +220,7 @@ namespace Garage3._0.Controllers
             return View(vehiclesCheckInNewVehicleViewModel);
         }
 
+
         // GET: Vehicles/EditVehicle/5
         public async Task<IActionResult> EditVehicle(int? id)
         {
@@ -274,6 +275,73 @@ namespace Garage3._0.Controllers
                     Text = x.Id + ". " + x.FullName
                 }).ToList();
             return (memberList);
+        }
+
+        // GET: Vehicles/CheckInOldVehicle/5
+        public IActionResult CheckInOldVehicle()
+        {
+            var vehiclesCheckInNewVehicleViewModel = new VehiclesCheckInNewViewModel
+            {
+                GetVehiclesType = GetTypeOfVehicle(),
+                GetMembers = GetMemberList(),
+                IsParked = false
+            };
+
+            return View(vehiclesCheckInNewVehicleViewModel);
+        }
+
+        // POST: Vehicles/CheckInOldVehicle/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CheckInOldVehicle(int id, VehiclesCheckInNewViewModel vehiclesCheckInNewVehicleViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                vehiclesCheckInNewVehicleViewModel.ArrivalTime = DateTime.Now;
+                vehiclesCheckInNewVehicleViewModel.IsParked = true;
+
+                var vehicle = new Vehicle
+                {
+                    ArrivalTime = vehiclesCheckInNewVehicleViewModel.ArrivalTime,
+                    RegNo = vehiclesCheckInNewVehicleViewModel.RegNo,
+                    Brand = vehiclesCheckInNewVehicleViewModel.Brand,
+                    Color = vehiclesCheckInNewVehicleViewModel.Color,
+                    IsParked = vehiclesCheckInNewVehicleViewModel.IsParked,
+                    Model = vehiclesCheckInNewVehicleViewModel.Model,
+                    Wheels = vehiclesCheckInNewVehicleViewModel.Wheels,
+                    Member = await _context.Member.FindAsync(vehiclesCheckInNewVehicleViewModel.MemberId),
+                    VehicleType = await _context.VehicleType.FindAsync(vehiclesCheckInNewVehicleViewModel.VehicleTypeId)
+                };
+
+                _context.Add(vehicle);
+                try
+                {
+                    _context.Add(vehicle);
+                    await _context.SaveChangesAsync();
+
+                    var freeSpot = await _context.ParkingSpot
+                        .Include(p => p.Parkeds)
+                        .Where(p => p.Parkeds.Count == 0)
+                        .FirstOrDefaultAsync();
+
+                    var parked = new Parked
+                    {
+                        ParkingSpot = freeSpot,
+                        Vehicle = vehicle
+                    };
+
+                    _context.Add(parked);
+                    await _context.SaveChangesAsync();
+
+                    return RedirectToAction(nameof(DetailsVehicle), new { id = vehicle.Id });
+                }
+                catch (Exception)
+                {
+                    ViewBag.ExistMessage = $"A vehicle with license plate {vehiclesCheckInNewVehicleViewModel.RegNo} is already registered";
+                }
+                return RedirectToAction(nameof(DetailsVehicle), new { id = vehiclesCheckInNewVehicleViewModel.Id });
+            }
+            return View(vehiclesCheckInNewVehicleViewModel);
         }
 
         // POST: Vehicles/EditVehicle/5
