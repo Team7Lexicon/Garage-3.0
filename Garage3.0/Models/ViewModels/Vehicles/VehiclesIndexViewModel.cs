@@ -20,6 +20,8 @@ namespace Garage3._0.Models
 
         [Display(Name = "Type")]
         public VehicleType VehicleType { get; set; }
+        public bool IsParked { get; set; }
+        [DisplayFormat(DataFormatString = @"{0:dd\:hh\:mm}")]
         public TimeSpan? ParkedTime { get; set; }
     }
 }

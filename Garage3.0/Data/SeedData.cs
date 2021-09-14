@@ -64,15 +64,15 @@ namespace Garage3._0.Data
         {
             var parkeds = new List<Parked>();
 
-            var newVehicles = vehicles.FindAll(v => v.VehicleType.ParkingSize == 1);
+            //var newVehicles = vehicles.FindAll(v => v.VehicleType.ParkingSize == 1);
 
-            foreach (var newVehicle in newVehicles)
+            foreach (var vehicle in vehicles)
                 {
                         var parked = new Parked
                         {
-                            VehicleId = newVehicle.Id,
+                            VehicleId = vehicle.Id,
                         };
-                        parked.ParkingSpotId = newVehicle.Id;
+                        parked.ParkingSpotId = vehicle.Id;
                         parkeds.Add(parked);
                 }
             return parkeds;

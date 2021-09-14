@@ -19,7 +19,7 @@ namespace Garage3._0.Models
         [Display(Name = "No of wheels")]
         public int Wheels { get; set; }
         [Display(Name = "Arrival time")]
-        public DateTime ArrivalTime { get; set; }
+        public DateTime? ArrivalTime { get; set; }
         public int VehicleTypeId { get; set; }
     }
 }

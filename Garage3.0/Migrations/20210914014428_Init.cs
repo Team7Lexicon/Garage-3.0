@@ -64,7 +64,7 @@ namespace Garage3._0.Migrations
                     Brand = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: true),
                     Model = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Wheels = table.Column<int>(type: "int", nullable: false),
-                    ArrivalTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ArrivalTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsParked = table.Column<bool>(type: "bit", nullable: false),
                     MemberId = table.Column<int>(type: "int", nullable: false),
                     VehicleTypeId = table.Column<int>(type: "int", nullable: false)

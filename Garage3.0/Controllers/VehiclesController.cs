@@ -32,6 +32,7 @@ namespace Garage3._0.Controllers
             ViewData["MembershipLevelSortParm"] = sortOrder == "MembershipLevel" ? "membershipLevel_desc" : "MembershipLevel";
             ViewData["VehicleTypeSortParm"] = sortOrder == "VehicleType" ? "vehicleType_desc" : "VehicleType";
             ViewData["ParkedTimeSortParm"] = sortOrder == "ParkedTime" ? "parkedTime_desc" : "ParkedTime";
+            ViewData["ParkStatSortParm"] = sortOrder == "ParkStat" ? "parkStat_desc" : "ParkStat";
 
             var vehicles = from s in _context.Vehicle.Include(v => v.Member).Include(v => v.VehicleType) select s;
 
@@ -52,11 +53,8 @@ namespace Garage3._0.Controllers
 
             foreach (var vehicle in vehicles)
             {
-                if (vehicle.IsParked == true)
-                {
                     VehiclesIndexViewModel viewModel2 = CreateVehiclesIndexViewModel(vehicle, members);
                     viewModels.Add(viewModel2);
-                }
             }
 
             switch (sortOrder)
@@ -86,6 +84,12 @@ namespace Garage3._0.Controllers
                     viewModels = viewModels.OrderBy(s => s.ParkedTime).ToList();
                     break;
                 case "parkedTime_desc":
+                    viewModels = viewModels.OrderByDescending(s => s.ParkedTime).ToList();
+                    break;
+                case "ParkStat":
+                    viewModels = viewModels.OrderBy(s => s.ParkedTime).ToList();
+                    break;
+                case "parkStat_desc":
                     viewModels = viewModels.OrderByDescending(s => s.ParkedTime).ToList();
                     break;
                 default:
@@ -338,6 +342,8 @@ namespace Garage3._0.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var parked = await _context.Parked.FirstOrDefaultAsync(p => p.VehicleId == id);
+            _context.Parked.Remove(parked);
             var vehicle = await _context.Vehicle.FindAsync(id);
             _context.Vehicle.Remove(vehicle);
             await _context.SaveChangesAsync();
@@ -372,7 +378,9 @@ namespace Garage3._0.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             vehicle.IsParked = false;
-
+            vehicle.ArrivalTime = null;
+            var parked = await _context.Parked.FirstOrDefaultAsync(p => p.VehicleId == id);
+            _context.Parked.Remove(parked);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index), new { id = vehicle.Id });
         }

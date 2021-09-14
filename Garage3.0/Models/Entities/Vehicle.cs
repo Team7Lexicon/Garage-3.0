@@ -21,7 +21,7 @@ namespace Garage3._0.Models
         [Display(Name = "No of wheels")]
         public int Wheels { get; set; }
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime ArrivalTime { get; set; }
+        public DateTime? ArrivalTime { get; set; }
         public bool IsParked { get; set; }
         //Foreign Keys
         public int MemberId { get; set; }
